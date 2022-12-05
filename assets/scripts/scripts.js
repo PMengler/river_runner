@@ -14,12 +14,13 @@ function riverRunner() {
       
       //looping over the fetch response and inserting the URL of your repos into a list
       for (var i = 0; i < data.sites.length; i++) {
-        // console.log(data.sites[i]);
+        console.log(data.sites[i]);
         // console.log(data.sites[i].station_nm + ': ' + data.sites[i].dec_lat_va + ', ' + data.sites[i].dec_long_va
         // + ' has an average flow of: ' + data.sites[i].flow + ' cfs');
 
-        locations.push([data.sites[i].station_nm, data.sites[i].dec_lat_va, data.sites[i].dec_long_va, data.sites[i].flow])
+        locations.push([data.sites[i].station_nm, data.sites[i].dec_lat_va, data.sites[i].dec_long_va, String(data.sites[i].stage), String(data.sites[i].flow)]);
       } 
+      // console.log(locations);
       
       // Google Maps API
       /**
@@ -47,7 +48,7 @@ function riverRunner() {
         
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
-            infowindow.setContent(locations[i][0]);
+            infowindow.setContent(locations[i][0] + ' Stage: ' + locations[i][3] + ' ft,' + " Flowrate: " + locations[i][4] + ' cfs');
             infowindow.open(map, marker);
             }
         })(marker, i));
