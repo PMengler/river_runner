@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./assets/style.css">
+    <title>River Runner</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
+
 <body>
 
-    <h3>Open the Console to see progress</h3>
+    <h1>Open the Console</h1>
     <div class="col-8 mb-3">
         <button class="btn btn-primary" id="fetch-button">
-          Call API
+          Get River Data
         </button>
     </div>
-    <div id="floating-panel">
-      <input type="button" value="Auto Rotate" id="rotate" />
+    
+    <h3>Locations</h3>
+    <div id="map">
     </div>
-    <div id="map"></div>
 
 </body>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly"
 defer
 ></script>
-<script src="./assets/script.js"></script>
+<script src="./assets/scripts/scripts.js"></script>
 </html>

@@ -22,7 +22,6 @@ function getApi() {
 
 fetchButton.addEventListener('click', getApi);
 
-
 // Google Maps API
 
 /**
@@ -33,20 +32,40 @@ fetchButton.addEventListener('click', getApi);
 // Initialize and add the map
 function initMap() {
   // The location of Uluru
-  const willametteRiverPortland = {
-        lat: 45.125,
-        lng: -122.073
-    }
+  var locations = [
+        ['Willamette River, near Portland, OR', 45.5175, -122.669, 2],
+        ['Fairview Creek at Glisan St, near Gresham, OR', 45.5276, -122.449, 1]
+  ];
+  
   // The map, centered at Uluru
   const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 15,
-    center: willametteRiverPortland,
+    zoom: 10,
+    center: new google.maps.LatLng(45.5175, -122.669),
   });
-  // The marker, positioned at Uluru
-  const marker = new google.maps.Marker({
-    position: willametteRiverPortland,
-    map: map,
-  });
-}
 
+  // The marker, positioned at Uluru
+  // const marker = new google.maps.Marker({
+  //   position: locations,
+  //   map: map,
+  // });
+
+  // Adds all markers in locations variable
+  var infowindow = new google.maps.InfoWindow();
+  
+  var marker, i;
+    
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+    
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+        infowindow.setContent(locations[i][0]);
+        infowindow.open(map, marker);
+        }
+    })(marker, i));
+  }  
+};
 window.initMap = initMap;
