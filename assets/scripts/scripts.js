@@ -14,15 +14,13 @@ function riverRunner() {
       
       //looping over the fetch response and inserting the URL of your repos into a list
       for (var i = 0; i < data.sites.length; i++) {
-      
-        locations.push([data.sites[i].station_nm, // location name
-                        data.sites[i].dec_lat_va, // latitude of location
-                        data.sites[i].dec_long_va, // longitude of location
-                        String(data.sites[i].stage), // stage of water surface at location
-                        String(data.sites[i].flow), // instantaneous flowrate at location
-                        data.sites[i].url]); // link to full usgs data about location
+        // console.log(data.sites[i]);
+        // console.log(data.sites[i].station_nm + ': ' + data.sites[i].dec_lat_va + ', ' + data.sites[i].dec_long_va
+        // + ' has an average flow of: ' + data.sites[i].flow + ' cfs');
+
+        locations.push([data.sites[i].station_nm, data.sites[i].dec_lat_va, data.sites[i].dec_long_va, String(data.sites[i].stage), String(data.sites[i].flow), data.sites[i].url]);
       } 
-      // console.log(locations);
+      console.log(locations);
       
       // Google Maps API
       /**
@@ -50,11 +48,11 @@ function riverRunner() {
         
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
-            const contentString = `<h3>${locations[i][0]}</h3>` + 
-            `<p> Content </p>` +
-            `<li> Stage: ${locations[i][3]} ft </li>` + 
-            `<li> Flowrate: ${locations[i][4]} cfs </li>` +
-            `<li> URL: <a href=${locations[i][5]}> https://waterdata.usgs.gov </a> </li>`;
+            const contentString = `<h3> ${locations[i][0]} </h3>` +
+                                  `<p> Content </p>` +
+                                  `<li> Stage: ${locations[i][3]} ft` +
+                                  `<li> Flowrate: ${locations[i][4]} cfs` +
+                                  `<li> URL: <a href=${locations[i][5]}> https://waterdata.usgs.gov </a> </li>`;
             // infowindow.setContent(locations[i][0] + ' Stage: ' + locations[i][3] + ' ft,' + " Flowrate: " + locations[i][4] + ' cfs');
             infowindow.setContent(contentString);
             infowindow.open(map, marker);
