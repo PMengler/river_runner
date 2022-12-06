@@ -4,49 +4,58 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- Link to Bulma.css -->
     <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>River Runner</title>
   </head>
   <body>
-    <header class="main-header" >
-      <h1>River Runner</h1>
-    </header>
-    <hr>
-    <div class="container">
+    <!-- <header class="has-background-info-dark pb-3 mb-5" > 
+      <h1 class="is-size-1 is-uppercase has-text-centered has-text-info">River Runner</h1>
+    </header> -->
+    <!--Navbar with logo-->
+    <nav class="navbar has-shadow is-info my-2">
+      <div class="navbar-brand">
+        <a class="navbar-item">
+          <!--Get logo made-->
+          <img src="/assets/images/Logo.png" alt="site-logo" style="max-height: 90px" class="p-1">
+        </a>
+        <!-- Do we want a burger for mobile? -->
+      </div>
+      <div class="navbar-menu" id="nav-links">
+        <div class="navbar-end">
+          <a class="navbar-item is-light">Last Searches</a>
+        </div>
+      </div>
+    </nav>
+    <div class="is align">
       <div class="row">
-        <aside class="side-panel">
-          <h2 class="h2">
-            Pick your starting point:
-          </h2>
-          <form class="dropdown">
-              <div>
-                <input placeholder="State">
-                <input placeholder="City">
-                <input placeholder="Radius">
-                <div>
+        <!-- Form -->
+                <div class="control">
+                  <input class="input" type="text" placeholder="Oregon" disabled>
+                </div>
+                <input class="input is-rounded" type="text" placeholder="City">
+                <div class="submit-button">
                   <button type="submit" class="btn search-button"
                   id="search-button" aria-label="submit search" >
                     Search
                   </button>
                   <hr>
-                </div>
-              </div>
-          </form>
-        </aside>
-        <section class="map">
+        <section class="section">
           Map would go here
         </section>
-        <section class="results">
+        <section class="section">
           Results would be here
         </section>
         <hr>
       </div>
     </div>
-    <footer>
-      <h2>River Runner</h2>
-      Logo?
+    <!-- footer -->
+    <footer class="footer">
+      <div class="content has-text-centered">
+      <p><img src="/assets/images/Logo.png" style="max-height: 20px"> Copyright 2022 Group 1</p>
+      </div>  
     </footer>
     <script src="/assets/scripts/scripts.js"></script>
   </body>
