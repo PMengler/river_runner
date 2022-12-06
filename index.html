@@ -6,57 +6,57 @@
     <title>River Runner</title>
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <script type="text/javascript"
+    src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly"></script>
 </head>
+
 <body>
-  <!-- Navbar -->
-  <nav class="navbar has-shadow has-background-info-light">
-    <div class="navbar-brand">
-      <a class="navbar-item">
-        <!--Get logo made????-->
-        <figure class="image is-128x128"> <img src="/assets/images/Logo.png" alt="site-logo" style="max-height: 90px" class=" image is-rounded px-1"> </figure>
-      </a>
-    </div>
-    <div class="navbar-menu" id="nav-links">
-      <div class="navbar-end">
-        <a class="navbar-item is-light">Last Searches</a>
-        <a class="navbar-item is-light">About</a>
-        <a class="navbar-item is-light">Meet the Team</a>
-      </div>
-    </div>
-    <!-- Mobile Burger on Navbar-->
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true">Last Searches</span>
-      <span aria-hidden="true">About</span>
-      <span aria-hidden="true">Meet the Team</span>
-    </a>
-  </nav>
-<!-- Form with imputs and button-->
-  <section class="section">
-    <div class="container">
-      <div class="columns is-vcentered">
-        <div class="coloumn px-2 has-text-centered">
-          
-          <div class="control">
-            <h2 class="is-size-2">Where you heading?</h2>
-            <input class="input is-rounded is-info" type="text" placeholder="City">
-            <input class="input" type="text" placeholder="Oregon" disabled>
-          </div>
-            <div class="submit-button">
-              <button type="submit" class="button search-button has-text-centered p-2 has-background-info-light my-3"
-                id="fetch-button" aria-label="submit search" >
-                    Take me to the river
-               </button>
-              </div>
+    <!-- Navbar -->
+    <nav class="navbar has-shadow has-background-info-light">
+        <div class="navbar-brand">
+            <a class="navbar-item">
+                <!--Get logo made????-->
+                <figure class="image is-128x128"> <img src="/assets/images/Logo.png" alt="site-logo"
+                        style="max-height: 90px" class=" image is-rounded px-1"> </figure>
+            </a>
         </div>
-        <div class="column px-3">
-          <!-- <button id="fetch-button">
-            Get River Data
-          </button> -->
-          <div id="map"></div>
+        <div class="navbar-menu" id="nav-links">
+            <div class="navbar-end">
+                <a class="navbar-item is-light">Last Searches</a>
+                <a class="navbar-item is-light">About</a>
+                <a class="navbar-item is-light">Meet the Team</a>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+        <!-- Mobile Burger on Navbar-->
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true">Last Searches</span>
+            <span aria-hidden="true">About</span>
+            <span aria-hidden="true">Meet the Team</span>
+        </a>
+    </nav>
+    <!-- Form with imputs and button-->
+    <section class="section">
+        <div class="container">
+            <div class="columns is-vcentered">
+                <div class="coloumn px-2 has-text-centered">
+
+                    <div class="control">
+                        <h2 class="is-size-2">Where you heading?</h2>
+                        <input id="city" class="input is-rounded is-info" type="text" placeholder="City">
+                        <input id="state" class="input" type="text" value="Oregon" disabled>
+                    </div>
+                    <div class="submit-button">
+                        <button type="submit"
+                            class="button search-button has-text-centered p-2 has-background-info-light my-3"
+                            id="fetch-button" aria-label="submit search"> 
+                            Take me to the river
+                        </button>
+                    </div>
+                </div>
+                <div id="map"></div> 
+            </div>
+        </div>
+    </section>
     <div class="container">
         <a href="#default" class="title">River Runner</a>
         <div class="block-right">
@@ -65,9 +65,8 @@
             <a href="#team">Meet the Team</a>
         </div>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly"
-    defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="./assets/scripts/scripts.js"></script>
 </body>
+
 </html>
