@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>River Runner</title>
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css">
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly""></script>
 </head>
 <body>
   <!-- Navbar -->
@@ -65,9 +68,33 @@
             <a href="#team">Meet the Team</a>
         </div>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly"
-    defer></script>
+    <div>
+        <button id="fetch-button">
+          Get River Data
+        </button>
+    </div>
+    <!-- Beginning - placeholder for form -->
+    <div>
+        <p>Input Oregon destination city:</p>
+        <input type="text" id="city">
+        <input type="text" disabled id="state" placeholder="OR">
+        <div>
+            <button id="submit-button">Submit</button>
+        </div>
+    </div>
+
+    <div align="center" style="height: 30px; width: 530px">
+        <input id="address" type="textbox">
+        <input type="button" value="Geocode" onclick="codeAddress()">
+    </div>
+
+    <!-- End - placeholder for form -->
+    <div id="map"></div>
+    <!-- <script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly"
+        defer></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="./assets/scripts/scripts.js"></script>
+    <!-- <script src="./assets/scripts/destination_script.js"></script> -->
 </body>
 </html>
