@@ -1,62 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <!-- Link to Bulma.css -->
-    <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./assets/css/style.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>River Runner</title>
-  </head>
-  <body>
-    <!-- <header class="has-background-info-dark pb-3 mb-5" > 
-      <h1 class="is-size-1 is-uppercase has-text-centered has-text-info">River Runner</h1>
-    </header> -->
-    <!--Navbar with logo-->
-    <nav class="navbar has-shadow is-info my-2">
-      <div class="navbar-brand">
-        <a class="navbar-item">
-          <!--Get logo made-->
-          <img src="/assets/images/Logo.png" alt="site-logo" style="max-height: 90px" class="p-1">
-        </a>
-        <!-- Do we want a burger for mobile? -->
-      </div>
-      <div class="navbar-menu" id="nav-links">
-        <div class="navbar-end">
-          <a class="navbar-item is-light">Last Searches</a>
-        </div>
-      </div>
-    </nav>
-    <div class="is align">
-      <div class="row">
-        <!-- Form -->
-                <div class="control">
-                  <input class="input" type="text" placeholder="Oregon" disabled>
-                </div>
-                <input class="input is-rounded" type="text" placeholder="City">
-                <div class="submit-button">
-                  <button type="submit" class="btn search-button"
-                  id="search-button" aria-label="submit search" >
-                    Search
-                  </button>
-                  <hr>
-        <section class="section">
-          Map would go here
-        </section>
-        <section class="section">
-          Results would be here
-        </section>
-        <hr>
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar  has-shadow is-info my-2">
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        <!--Get logo made-->
+        <img src="/assets/images/Logo.png" alt="site-logo" style="max-height: 90px" class="p-1">
+      </a>
+    </div>
+    <div class="navbar-menu" id="nav-links">
+      <div class="navbar-end">
+        <a class="navbar-item is-light">Last Searches</a>
+        <a class="navbar-item is-light">About</a>
+        <a class="navbar-item is-light">Meet the Team</a>
       </div>
     </div>
-    <!-- footer -->
-    <footer class="footer">
-      <div class="content has-text-centered">
-      <p><img src="/assets/images/Logo.png" style="max-height: 20px"> Copyright 2022 Group 1</p>
-      </div>  
-    </footer>
-    <script src="/assets/scripts/scripts.js"></script>
-  </body>
+    <!-- Mobile Burger on Navbar-->
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true">Last Searches</span>
+      <span aria-hidden="true">About</span>
+      <span aria-hidden="true">Meet the Team</span>
+    </a>
+  </nav>
+  <div class="is align">
+    <div class="row">
+      <!-- Form -->
+              <div class="control">
+                <input class="input" type="text" placeholder="Oregon" disabled>
+              </div>
+              <input class="input is-rounded" type="text" placeholder="City">
+              <div class="submit-button">
+                <button type="submit" class="btn search-button"
+                id="search-button" aria-label="submit search" >
+                  Search
+                </button>
+    </div>
+  </div>
+    <div class="container">
+        <a href="#default" class="title">River Runner</a>
+        <div class="block-right">
+            <a class="active" href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#team">Meet the Team</a>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src=".assets/scripts/scripts.js"></script>
+</body>
 </html>
