@@ -1,3 +1,4 @@
+APIkey = 'AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw';
 var fetchButton = document.getElementById('fetch-button');
 var locations = [];
 //getApi function is called when the fetchButton is clicked
@@ -14,11 +15,13 @@ function riverRunner() {
       
       //looping over the fetch response and inserting the URL of your repos into a list
       for (var i = 0; i < data.sites.length; i++) {
-        // console.log(data.sites[i]);
-        // console.log(data.sites[i].station_nm + ': ' + data.sites[i].dec_lat_va + ', ' + data.sites[i].dec_long_va
-        // + ' has an average flow of: ' + data.sites[i].flow + ' cfs');
 
-        locations.push([data.sites[i].station_nm, data.sites[i].dec_lat_va, data.sites[i].dec_long_va, String(data.sites[i].stage), String(data.sites[i].flow), data.sites[i].url]);
+        locations.push([data.sites[i].station_nm, // station name
+                        data.sites[i].dec_lat_va, // latitude
+                        data.sites[i].dec_long_va, // longitude
+                        String(data.sites[i].stage), // stage in ft
+                        String(data.sites[i].flow), // flow in cubic feet per second
+                        data.sites[i].url]); // URL for more data
       } 
       console.log(locations);
       
@@ -53,7 +56,6 @@ function riverRunner() {
                                   `<li> Stage: ${locations[i][3]} ft` +
                                   `<li> Flowrate: ${locations[i][4]} cfs` +
                                   `<li> URL: <a href=${locations[i][5]}> https://waterdata.usgs.gov </a> </li>`;
-            // infowindow.setContent(locations[i][0] + ' Stage: ' + locations[i][3] + ' ft,' + " Flowrate: " + locations[i][4] + ' cfs');
             infowindow.setContent(contentString);
             infowindow.open(map, marker);
             }
