@@ -42,11 +42,18 @@ function riverRunner() {
       var infowindow = new google.maps.InfoWindow();
       
       var marker, i;
+
+      var pinColor = "2861ff";
+      var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+        new google.maps.Size(21, 34),
+        new google.maps.Point(0,0),
+        new google.maps.Point(10, 34));
         
         for (i = 0; i < locations.length; i++) {  
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-            map: map
+            map: map,
+            icon: pinImage
           });
         
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
