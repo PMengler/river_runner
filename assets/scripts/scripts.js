@@ -15,7 +15,6 @@ function riverRunner() {
       
       //looping over the fetch response and inserting the URL of your repos into a list
       for (var i = 0; i < data.sites.length; i++) {
-
         locations.push([data.sites[i].station_nm, // station name
                         data.sites[i].dec_lat_va, // latitude
                         data.sites[i].dec_long_va, // longitude
