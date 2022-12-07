@@ -1,9 +1,40 @@
-APIkey = 'AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw';
-var fetchButton = document.getElementById('fetch-button');
 var locations = [];
-//getApi function is called when the fetchButton is clicked
+
+var submitButton = document.getElementById('fetch-button');
+
+var geocoder;
+var map;
+var infowindow;
+
+function initialize() {
+  // initial map pre-destination search
+  geocoder = new google.maps.Geocoder();
+  var loca = new google.maps.LatLng(45.5152, -122.6784);
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: loca,
+    zoom: 11
+  });
+}
 
 function riverRunner() {
+  // gets destination input and centers and marks map
+  let cityEl = document.getElementById('city').value;
+  let stateEl = document.getElementById('state').value;
+  let address = `${cityEl}, ${stateEl}`;
+  
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == 'OK') {
+      map.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+          map: map,
+          position: results[0].geometry.location
+      });
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+
   // Insert the API url to get a list of your repos
   var requestUrl = 'https://waterwatch.usgs.gov/webservices/realtime?region=or&format=json';
 
@@ -15,30 +46,16 @@ function riverRunner() {
       
       //looping over the fetch response and inserting the URL of your repos into a list
       for (var i = 0; i < data.sites.length; i++) {
-        locations.push([data.sites[i].station_nm, // station name
-                        data.sites[i].dec_lat_va, // latitude
-                        data.sites[i].dec_long_va, // longitude
-                        String(data.sites[i].stage), // stage in ft
-                        String(data.sites[i].flow), // flow in cubic feet per second
-                        data.sites[i].url]); // URL for more data
-      } 
-      console.log(locations);
-      
-      // Google Maps API
-      /**
-       * @license
-       * Copyright 2019 Google LLC. All Rights Reserved.
-       * SPDX-License-Identifier: Apache-2.0
-       */
 
-      // console.log(locations);
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 12,
-        center: new google.maps.LatLng(45.5175, -122.669),
-      });
-    
-      // Adds all markers in locations variable
-      var infowindow = new google.maps.InfoWindow();
+        locations.push([
+          data.sites[i].station_nm, // station name
+          data.sites[i].dec_lat_va, // latitude
+          data.sites[i].dec_long_va, // longitude
+          String(data.sites[i].stage), // stage in ft
+          String(data.sites[i].flow), // flow in cubic feet per second
+          data.sites[i].url, // URL for more data
+        ]); 
+      } 
       
       var marker, i;
 
@@ -69,6 +86,7 @@ function riverRunner() {
       }  
     })
     return;
-  };
+};
 
-fetchButton.addEventListener('click', riverRunner);
+google.maps.event.addDomListener(window, 'load', initialize);
+submitButton.addEventListener('click', riverRunner);
