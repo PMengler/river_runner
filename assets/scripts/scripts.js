@@ -1,10 +1,10 @@
+var weatherAPIkey = '6c2804129ff3cbd5d74a5aa5eb917a4c';
+var googleAPIkey = `AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw`;
+var weather = [];
 var locations = [];
-
 var submitButton = document.getElementById('fetch-button');
-
 var geocoder;
 var map;
-var infowindow;
 
 function initialize() {
   // initial map pre-destination search
@@ -35,16 +35,16 @@ function riverRunner() {
     }
   });
 
-  // Insert the API url to get a list of your repos
-  var requestUrl = 'https://waterwatch.usgs.gov/webservices/realtime?region=or&format=json';
+  // USGS water conditions API
+  var requestWaterUrl = 'https://waterwatch.usgs.gov/webservices/realtime?region=or&format=json';
 
-  fetch(requestUrl)
+  fetch(requestWaterUrl)
     .then(function (response) {
       return response.json();
     })
     .then(function (data) {
       
-      //looping over the fetch response and inserting the URL of your repos into a list
+      //looping over the fetch response and inserting the data from the API to the locations array
       for (var i = 0; i < data.sites.length; i++) {
 
         locations.push([
@@ -54,10 +54,26 @@ function riverRunner() {
           String(data.sites[i].stage), // stage in ft
           String(data.sites[i].flow), // flow in cubic feet per second
           data.sites[i].url, // URL for more data
-        ]); 
+        ])
 
-      } 
-      
+        function weatherAPI() {
+          var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${locations[i][1]}&lon=${locations[i][2]}&units=imperial&appid=${weatherAPIkey}`;
+          fetch(requestUrl)
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              // console.log(data);
+              weather.push([
+                data.current.temp,
+                data.current.wind_speed
+              ])
+            });
+            return;
+        };
+        weatherAPI();
+      };
+
       
       var pinColor = "2861ff";
       var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
@@ -76,7 +92,10 @@ function riverRunner() {
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
             var contentString = `<h3> ${locations[i][0]} </h3>` +
-                                  `<p> Content </p>` +
+                                  `<p> Weather: </p>` +
+                                  `<li> Temperature: ${weather[i][0]} F` +
+                                  `<li> Wind Speed: ${weather[i][1]} mph` +
+                                  `<p> Water Conditions: </p>` +
                                   `<li> Stage: ${locations[i][3]} ft` +
                                   `<li> Flowrate: ${locations[i][4]} cfs` +
                                   `<li> URL: <a href=${locations[i][5]}> https://waterdata.usgs.gov </a> </li>`;
