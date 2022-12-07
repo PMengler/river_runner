@@ -55,17 +55,18 @@ function riverRunner() {
           String(data.sites[i].flow), // flow in cubic feet per second
           data.sites[i].url, // URL for more data
         ]); 
+
       } 
       
-      var marker, i;
-
+      
       var pinColor = "2861ff";
       var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-        new google.maps.Size(21, 34),
-        new google.maps.Point(0,0),
-        new google.maps.Point(10, 34));
-        
-        for (i = 0; i < locations.length; i++) {  
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0,0),
+      new google.maps.Point(10, 34));
+      
+      for (i = 0; i < locations.length; i++) {  
+          var marker, i;
           marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i][1], locations[i][2]),
             map: map,
@@ -74,11 +75,12 @@ function riverRunner() {
         
           google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
-            const contentString = `<h3> ${locations[i][0]} </h3>` +
+            var contentString = `<h3> ${locations[i][0]} </h3>` +
                                   `<p> Content </p>` +
                                   `<li> Stage: ${locations[i][3]} ft` +
                                   `<li> Flowrate: ${locations[i][4]} cfs` +
                                   `<li> URL: <a href=${locations[i][5]}> https://waterdata.usgs.gov </a> </li>`;
+            const infowindow = new google.maps.InfoWindow();
             infowindow.setContent(contentString);
             infowindow.open(map, marker);
             }
