@@ -1,5 +1,4 @@
 var weatherAPIkey = '6c2804129ff3cbd5d74a5aa5eb917a4c';
-var googleAPIkey = `AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw`;
 var weather = [];
 var locations = [];
 var submitButton = document.getElementById('fetch-button');
@@ -90,11 +89,12 @@ function riverRunner() {
         })(marker, i));
       }  
     })
+    // weatherAPI();
     return;
   };
   
   function weatherAPI() {
-    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${results[0].geometry.location}&units=imperial&appid=${weatherAPIkey}`;
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${xxx}&units=imperial&appid=${weatherAPIkey}`;
     fetch(requestUrl)
       .then(function(response) {
         return response.json();
@@ -105,6 +105,7 @@ function riverRunner() {
           String(data.main.temp), 
           String(data.wind.speed)]);
       });
+      console.log(weather);
       return;
   };
   // weatherAPI();
