@@ -10,61 +10,61 @@
     src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly"></script>
 </head>
 
-<body>
+<body class="body">
     <!-- Navbar -->
-    <nav class="navbar has-shadow has-background-info-light">
+    <nav class="navbar has-shadow has-background-light">
         <div class="navbar-brand">
             <a class="navbar-item">
                 <!--Get logo made????-->
-                <figure class="image is-128x128"> <img src="/assets/images/Logo.png" alt="site-logo"
-                        style="max-height: 90px" class=" image is-rounded px-1"> </figure>
+                <p class="title is-2">River Runner</p>
             </a>
+            <!-- Mobile Burger on Navbar-->
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+              </a>
         </div>
-        <div class="navbar-menu" id="nav-links">
+        <!-- Navbar Links -->
+        <div class="navbar-menu" id="navbar-links">
             <div class="navbar-end">
                 <a class="navbar-item is-light">Last Searches</a>
                 <a class="navbar-item is-light">About</a>
             </div>
         </div>
-        <!-- Mobile Burger on Navbar-->
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-            <span aria-hidden="true">Last Searches</span>
-            <span aria-hidden="true">About</span>
-        </a>
-    </nav>
-    <!-- Form with imputs and button-->
+      </nav>
+    <!-- Form with imputs and search button-->
     <section class="section">
-        <div class="container">
+        <div class="box">
             <div class="columns is-vcentered">
                 <div class="column is-one-third has-text-centered">
                 <div class="field">
                     <div class="control">
                         <h2 class="is-size-2">Where you heading?</h2>
-                        <input id="city" class="input is-rounded is-info" type="text" placeholder="City">
-                        <input id="state" class="input" type="text" value="Oregon" disabled>
+                        <input id="city" class="input is-rounded is-info is-medium" type="text" placeholder="City">
+                        <input id="state" class="input is-rounded is-medium" type="text" value="Oregon" disabled>
                     </div>
                 </div>
                     <div class="submit-button">
                         <button type="submit"
-                            class="button search-button has-text-centered p-2 has-background-info-light my-3"
+                            class="button search-button has-text-centered is-medium is-rounded is-fullwidth has-background-info-light p-3 my-5"
                             id="fetch-button" aria-label="submit search"> 
                             Take me to the river
                         </button>
                     </div>
                 </div>
-                <div id="map"></div> 
+                <div class="column" id="map"></div> 
             </div>
         </div>
     </section>
-    <div class="container">
-        <a href="#default" class="title">River Runner</a>
-        <div class="block-right">
-            <a class="active" href="#home">Home</a>
-            <a href="#about">About</a>
+    <footer class="footer has-background-light">
+        <div class="content has-text-centered">
+          <p>
+            <strong>RIVER RUNNER</strong> by <a href="https://github.com/savannahvel/river_runner">Project Group One</a>.
+          </p>
         </div>
-    </div>
+      </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="./assets/scripts/scripts.js"></script>
 </body>
-
 </html>
