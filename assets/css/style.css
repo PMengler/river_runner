@@ -5,3 +5,10 @@
     /* The width is the width of the web page */
     /* border-color: #2861ff; */
   }
+
+  .body {
+  background-image: url('/assets/images/rogue-river-oregon.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;  
+  background-size: cover;
+}

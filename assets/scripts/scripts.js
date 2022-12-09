@@ -26,8 +26,8 @@ function calcDistance(fromLat, fromLng, toLat, toLng) {
   let distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
     new google.maps.LatLng(fromLat, fromLng), new google.maps.LatLng(toLat, toLng));
   //for an approximate result, divide the length value by 1609
-  distance = distanceInMeters / 1609;
-  return Math.round(distance * 100) / 100
+  distance = (distanceInMeters / 1609).toFixed(2)
+  return distance;
 }
 
 function createRiverMarker(latlng, html) {
@@ -43,17 +43,20 @@ function createRiverMarker(latlng, html) {
     icon: pinImage
   });
 
+  
   google.maps.event.addListener(riverMarker, 'click', function () {
-    let infowindow = new google.maps.InfoWindow();
-    infowindow.setContent(html);
-    infowindow.open(map, riverMarker);
     selectedRiverLat = riverMarker.getPosition().lat();
     selectedRiverLng = riverMarker.getPosition().lng();
     console.log(calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng));
+    calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng);
+    let distanceInfo = `<li> Distance: ${distance} </li>`
+    let infowindow = new google.maps.InfoWindow();
+    infowindow.setContent(html + distanceInfo);
+    infowindow.open(map, riverMarker);
+    
     weather = [];
     getPinLocationName();
     getWeather();
-    console.log(pinLocationName);
   });
   return riverMarker;
 }
