@@ -97,29 +97,29 @@ function riverRunner() {
           data.sites[i].url, // URL for more data
         ])
 
-        // function weatherAPI() {
-        //   var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${locations[i][1]}&lon=${locations[i][2]}&units=imperial&appid=${weatherAPIkey}`;
-        //   fetch(requestUrl)
-        //     .then(function(response) {
-        //       return response.json();
-        //     })
-        //     .then(function(data) {
-        //       // console.log(data);
-        //       weather.push([
-        //         data.current.temp,
-        //         data.current.wind_speed
-        //       ])
-        //     });
-        //     return;
-        // };
-        // weatherAPI();
+        function weatherAPI() {
+          var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${locations[i][1]}&lon=${locations[i][2]}&units=imperial&appid=${weatherAPIkey}`;
+          fetch(requestUrl)
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              // console.log(data);
+              weather.push([
+                data.current.temp,
+                data.current.wind_speed
+              ])
+            });
+            return;
+        };
+        weatherAPI();
       };
       
       for (let i = 0; i < locations.length; i++) {  
         var contentString = `<h3> ${locations[i][0]} </h3 contentString = 3>` +
                             `<p> Weather: </p>` +
-                            // `<li> Temperature: ${weather[i][0]} F` +
-                            // `<li> Wind Speed: ${weather[i][1]} mph` +
+                            `<li> Temperature: ${weather[i][0]} F` +
+                            `<li> Wind Speed: ${weather[i][1]} mph` +
                             `<p> Water Conditions: </p>` +
                             `<li> Stage: ${locations[i][3]} ft` +
                             `<li> Flowrate: ${locations[i][4]} cfs` +
