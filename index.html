@@ -12,7 +12,7 @@
 
 <body class="body">
     <!-- Navbar -->
-    <nav class="navbar has-shadow has-background-light">
+    <nav class="navbar p-3 has-shadow is-transparent">
         <div class="navbar-brand">
             <a class="navbar-item">
                 <p class="title is-2">River Runner</p>
@@ -24,17 +24,22 @@
                 <span aria-hidden="true"></span>
               </a>
         </div>
-        <!-- Navbar Links -->
-        <div class="navbar-menu" id="navbar-links">
-            <div class="navbar-end">
-                <a class="navbar-item is-light">Last Searches</a>
-                <a class="navbar-item is-light">About</a>
+        <!-- Navbar dropdown -->
+        <div class="navbar-item has-dropdown is-hoverable navbar-end">
+            <a class="navbar-link">
+              Last Searches
+            </a>
+            <div class="navbar-dropdown">
+              <!-- <a class="navbar-item">
+                Search Item
+              </a> -->
             </div>
+          </div>
         </div>
       </nav>
     <!-- Form with imputs and search button-->
     <section class="section">
-        <div class="box">
+        <div class="box has-background-white">
             <div class="columns is-vcentered">
                 <div class="column is-one-third has-text-centered">
                 <div class="field">
@@ -46,7 +51,7 @@
                 </div>
                     <div class="submit-button">
                         <button type="submit"
-                            class="button search-button has-text-centered is-medium is-rounded is-fullwidth has-background-info-light p-3 my-5"
+                            class="button search-button is-medium is-rounded is-fullwidth has-background-info-light p-3 my-5 has-text-link"
                             id="fetch-button" aria-label="submit search"> 
                             Take me to the river
                         </button>
@@ -57,8 +62,8 @@
         </div>
     <!-- Info Box -->
         <div class= "container py-6" id="current-weather">
-        <article class="message is-info is-medium">
-            <div class="message-body">
+        <article class="message is-light">
+            <div class="message-body has-text-left">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               <strong>Pellentesque risus mi</strong>, tempus quis placerat ut,
               porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla.
@@ -71,8 +76,9 @@
           </article>
         </div>
     </section>
-    <footer class="footer has-background-light">
-        <div class="content has-text-centered">
+    <!-- Footer -->
+    <footer class="footer has-background-light is-fixed-bottom">
+        <div class="content has-text-centered ">
           <p>
             <strong>RIVER RUNNER</strong> by <a href="https://github.com/savannahvel/river_runner">Project Group One</a>.
           </p>
