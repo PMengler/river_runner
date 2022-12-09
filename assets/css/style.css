@@ -1,3 +1,7 @@
+* {
+  font-family: 'Roboto','Raleway';
+}
+
 #map {
     height: 600px;
     /* The height is 400 pixels */
@@ -11,4 +15,13 @@
   background-repeat: no-repeat;
   background-attachment: fixed;  
   background-size: cover;
+}
+
+img {
+  padding: 0px 15px 0px 0px;
+}
+
+.navbar-menu {
+  padding: 0px 25px 0px 0px;
+  color: black;
 }
