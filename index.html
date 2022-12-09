@@ -13,12 +13,11 @@
 
 <body class="body">
     <!-- Navbar -->
-    <nav class="navbar has-shadow has-background-white">
+    <nav class="navbar  has-background-light">
         <div class="navbar-brand">
             <a class="navbar-item">
-                <figure class=""image is 100x100"> <img src="/assets/images/riverrunnerlogo.png" alt="site logo"
+                <figure class="image is 100x100"> <img src="/assets/images/riverrunnerlogo.png" alt="site logo"
                     style="max-height: 130px"> </figure>
-                <p class="title is-2">River Runner</p>
             </a>
             <!-- Mobile Burger on Navbar-->
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
@@ -27,29 +26,34 @@
                 <span aria-hidden="true"></span>
               </a>
         </div>
-        <!-- Navbar Links -->
-        <div class="navbar-menu" id="navbar-links">
-            <div class="navbar-end">
-                <a class="navbar-item is-light">Last Searches</a>
-                <a class="navbar-item is-light">About</a>
+        <!-- Navbar dropdown -->
+        <div class="navbar-item has-dropdown is-hoverable navbar-end">
+            <a class="navbar-link has-text-grey-dark">
+              Last Searches
+            </a>
+            <div class="navbar-dropdown">
+              <!-- <a class="navbar-item">
+                Search Item
+              </a> -->
             </div>
+          </div>
         </div>
       </nav>
     <!-- Form with imputs and search button-->
     <section class="section">
-        <div class="box">
+        <div class="box has-background-grey-lighter">
             <div class="columns is-vcentered">
                 <div class="column is-one-third has-text-centered">
                 <div class="field">
                     <div class="control">
-                        <h2 class="is-size-2">Where you heading?</h2>
+                        <h2 class="is-size-2 has-text-grey-dark py-2">Where you heading?</h2>
                         <input id="city" class="input is-rounded is-info is-medium" type="text" placeholder="City">
                         <input id="state" class="input is-rounded is-medium" type="text" value="Oregon" disabled>
                     </div>
                 </div>
                     <div class="submit-button">
                         <button type="submit"
-                            class="button search-button has-text-centered is-medium is-rounded is-fullwidth has-background-info-light p-3 my-5"
+                            class="button search-button is-medium is-rounded is-fullwidth has-background-primary p-3 my-5 has-text-primary-light"
                             id="fetch-button" aria-label="submit search"> 
                             Take me to the river
                         </button>
@@ -59,19 +63,23 @@
             </div>
         </div>
     <!-- Info Box -->
-        <div class= "container py-6" id="current-weather">
-        <article class="message is-info is-medium">
-            <div class="message-body">
+        <div class= "section py-6" id="current-weather">
+        <div class="columns is-centered">
+            <div class=" column is-one-third">
+        <article class="message has-background-light is-medium">
+            <div class="message-body ">
                 Select a river location to display the current weather!
             </div>
           </article>
         </div>
+        </div>
+        </div>
     </section>
     <!-- Footer -->
-    <footer class="footer has-background-light">
+    <footer class="footer has-background-light is-fixed-bottom">
         <div class="content has-text-centered">
           <p>
-            <strong>RIVER RUNNER</strong> by <a href="https://github.com/savannahvel/river_runner">Project Group One</a>.
+            <strong>RIVER RUNNER</strong> by <a href="https://github.com/savannahvel/river_runner" class="has-text-grey-dark">Project Group One</a>.
           </p>
         </div>
       </footer>
