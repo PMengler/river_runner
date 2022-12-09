@@ -49,13 +49,14 @@ function createRiverMarker(latlng, html) {
     selectedRiverLng = riverMarker.getPosition().lng();
     console.log(calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng));
     calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng);
-    let distanceInfo = `<li> Distance: ${distance} </li>`
+    let distanceInfo = `<li> Distance: ${distance} miles away</li>`
     let infowindow = new google.maps.InfoWindow();
     infowindow.setContent(html + distanceInfo);
     infowindow.open(map, riverMarker);
     
     weather = [];
     getPinLocationName();
+    clearCurrentWeather();
     getWeather();
   });
   return riverMarker;
@@ -131,15 +132,23 @@ function riverRunner() {
         weather.push([
           data.current.temp, 
           data.current.wind_speed,
-          data.current.uvi]);
+          data.current.uvi,
+          data.current.weather[0].icon]);
           
-        var currentWeatherEl = $('#current-weather');
-        currentWeatherEl.addClass('card text-white bg-dark mb-3'); //card text-white bg-dark mb-3
+        var currentWeatherEl = $('.message-body');
+
+        currentWeatherEl.addClass('container'); //card text-white bg-dark mb-3
   
         // selected location in current weather card
         var locationNameEl = $('<h3>');
         locationNameEl.text(pinLocationName);
         currentWeatherEl.append(locationNameEl);
+
+        // weather emoji for weather in current weather card
+        var currentWeatherEmoji =  weather[0][3];
+        var currentWeatherEmojiEl = $('<img>');
+        currentWeatherEmojiEl.attr('src', "http://openweathermap.org/img/wn/" + currentWeatherEmoji + ".png");
+        currentWeatherEl.append(currentWeatherEmojiEl);
         
         // temperature
         var currentTemp = weather[0][0];
@@ -152,24 +161,22 @@ function riverRunner() {
         var currentWindEl = $('<li>')
         currentWindEl.text(`Wind: ${currentWind} mph`)
         currentWeatherEl.append(currentWindEl);
-
+        
         // UV
         var currentUv = weather[0][2];
         var currentUvEl = $('<li>');
         currentUvEl.text(`UV Index: ${currentUv}`)
         currentWeatherEl.append(currentUvEl);
-        });
-
-
-
-
+        
+      });
+      
       console.log(weather);
       return;
   };
 
   // Creating a card with weather info
   function clearCurrentWeather () {
-    var currentWeatherEl = $("#current-weather");
+    var currentWeatherEl = $(".message-body");
     currentWeatherEl.empty();
     return;
   };
@@ -183,9 +190,6 @@ function riverRunner() {
     }
     // console.log(pinLocationName);
   };
-
-
-
 
   google.maps.event.addDomListener(window, 'load', initialize);
   submitButton.addEventListener('click', riverRunner);
