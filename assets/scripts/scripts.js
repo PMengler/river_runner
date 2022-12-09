@@ -26,8 +26,8 @@ function calcDistance(fromLat, fromLng, toLat, toLng) {
   let distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
     new google.maps.LatLng(fromLat, fromLng), new google.maps.LatLng(toLat, toLng));
   //for an approximate result, divide the length value by 1609
-  distance = distanceInMeters / 1609;
-  return Math.round(distance * 100) / 100
+  distance = (distanceInMeters / 1609).toFixed(2)
+  return distance;
 }
 
 function createRiverMarker(latlng, html) {
@@ -43,14 +43,16 @@ function createRiverMarker(latlng, html) {
     icon: pinImage
   });
 
+  
   google.maps.event.addListener(riverMarker, 'click', function () {
-    let infowindow = new google.maps.InfoWindow();
-    infowindow.setContent(html);
-    infowindow.open(map, riverMarker);
     selectedRiverLat = riverMarker.getPosition().lat();
     selectedRiverLng = riverMarker.getPosition().lng();
-    console.log(calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng));
-
+    calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng);
+    let distanceInfo = `<li> Distance: ${distance} </li>`
+    let infowindow = new google.maps.InfoWindow();
+    infowindow.setContent(html + distanceInfo);
+    infowindow.open(map, riverMarker);
+    
   });
   return riverMarker;
 }
@@ -122,7 +124,7 @@ function riverRunner() {
                             `<li> Wind Speed: ${weather[i][1]} mph` +
                             `<p> Water Conditions: </p>` +
                             `<li> Stage: ${locations[i][3]} ft` +
-                            `<li> Flowrate: ${locations[i][4]} cfs` +
+          `<li> Flowrate: ${locations[i][4]} cfs` +
           `<li> URL: <a href=${locations[i][5]}> https://waterdata.usgs.gov </a> </li>`;
 
         createRiverMarker(new google.maps.LatLng(locations[i][1], locations[i][2]), contentString)
