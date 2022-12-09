@@ -1,3 +1,7 @@
+* {
+  font-family: 'Roboto','Raleway';
+}
+
 #map {
     height: 600px;
     /* The height is 400 pixels */
