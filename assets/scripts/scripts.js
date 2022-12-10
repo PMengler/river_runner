@@ -1,5 +1,4 @@
 var weatherAPIkey = '6c2804129ff3cbd5d74a5aa5eb917a4c';
-var googleAPIkey = `AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw`;
 var weather = [];
 var locations = [];
 var searchedLocations = JSON.parse(localStorage.getItem("searchedLocations")) || [];;
@@ -10,6 +9,7 @@ var address;
 let selectedRiverLat;
 let selectedRiverLng;
 let distance;
+var pinLocationName = '';
 var submitButton = document.getElementById('fetch-button');
 var geocoder;
 var map;
@@ -49,12 +49,17 @@ function createRiverMarker(latlng, html) {
   google.maps.event.addListener(riverMarker, 'click', function () {
     selectedRiverLat = riverMarker.getPosition().lat();
     selectedRiverLng = riverMarker.getPosition().lng();
+    console.log(calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng));
     calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng);
-    let distanceInfo = `<li> Distance: ${distance} </li>`
+    let distanceInfo = `<li> Distance: ${distance} miles away</li>`
     let infowindow = new google.maps.InfoWindow();
     infowindow.setContent(html + distanceInfo);
     infowindow.open(map, riverMarker);
     
+    weather = [];
+    getPinLocationName();
+    clearCurrentWeather();
+    getWeather();
   });
   return riverMarker;
 }
@@ -118,42 +123,96 @@ geocoder.geocode({ 'address': address }, function (results, status) {
           String(data.sites[i].flow), // flow in cubic feet per second
           data.sites[i].url, // URL for more data
         ])
-
-        // function weatherAPI() {
-        //   var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${locations[i][1]}&lon=${locations[i][2]}&units=imperial&appid=${weatherAPIkey}`;
-        //   fetch(requestUrl)
-        //     .then(function(response) {
-        //       return response.json();
-        //     })
-        //     .then(function(data) {
-        //       // console.log(data);
-        //       weather.push([
-        //         data.current.temp,
-        //         data.current.wind_speed
-        //       ])
-        //     });
-        //     return;
-        // };
-        // weatherAPI();
       };
       
       for (let i = 0; i < locations.length; i++) {  
         var contentString = `<h3> ${locations[i][0]} </h3 contentString = 3>` +
-                            `<p> Weather: </p>` +
+                            // `<p> Weather: </p>` +
                             // `<li> Temperature: ${weather[i][0]} F` +
                             // `<li> Wind Speed: ${weather[i][1]} mph` +
                             `<p> Water Conditions: </p>` +
                             `<li> Stage: ${locations[i][3]} ft` +
-          `<li> Flowrate: ${locations[i][4]} cfs` +
-          `<li> URL: <a href=${locations[i][5]}> https://waterdata.usgs.gov </a> </li>`;
+                            `<li> Flowrate: ${locations[i][4]} cfs` +
+                            `<li> URL: <a href=${locations[i][5]}> https://waterdata.usgs.gov </a> </li>`;
 
         createRiverMarker(new google.maps.LatLng(locations[i][1], locations[i][2]), contentString)
       }
     })
     return;
-};
+  };
+  
+  function getWeather() {
+    var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${selectedRiverLat}&lon=${selectedRiverLng}&units=imperial&appid=${weatherAPIkey}`;
+    fetch(requestUrl)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        // console.log(data);
+        weather.push([
+          data.current.temp, 
+          data.current.wind_speed,
+          data.current.uvi,
+          data.current.weather[0].icon]);
+          
+        var currentWeatherEl = $('.message-body');
 
-google.maps.event.addDomListener(window, 'load', initialize);
-submitButton.addEventListener('click', function () {
+        currentWeatherEl.addClass('container'); //card text-white bg-dark mb-3
+  
+        // selected location in current weather card
+        var locationNameEl = $('<h3>');
+        locationNameEl.text(pinLocationName);
+        currentWeatherEl.append(locationNameEl);
+
+        // weather emoji for weather in current weather card
+        var currentWeatherEmoji =  weather[0][3];
+        var currentWeatherEmojiEl = $('<img>');
+        currentWeatherEmojiEl.attr('src', "http://openweathermap.org/img/wn/" + currentWeatherEmoji + ".png");
+        currentWeatherEl.append(currentWeatherEmojiEl);
+        
+        // temperature
+        var currentTemp = weather[0][0];
+        var currentTempEl = $('<li>');
+        currentTempEl.text(`Temp: ${currentTemp} °F`)
+        currentWeatherEl.append(currentTempEl);
+        
+        // get current wind speed and display
+        var currentWind = weather[0][1];
+        var currentWindEl = $('<li>')
+        currentWindEl.text(`Wind: ${currentWind} mph`)
+        currentWeatherEl.append(currentWindEl);
+        
+        // UV
+        var currentUv = weather[0][2];
+        var currentUvEl = $('<li>');
+        currentUvEl.text(`UV Index: ${currentUv}`)
+        currentWeatherEl.append(currentUvEl);
+        
+      });
+      
+      console.log(weather);
+      return;
+  };
+
+  // Creating a card with weather info
+  function clearCurrentWeather () {
+    var currentWeatherEl = $(".message-body");
+    currentWeatherEl.empty();
+    return;
+  };
+
+  function getPinLocationName () {
+    for (var i = 0; i < locations.length; i++) {
+      if (locations[i][1] == selectedRiverLat && locations[i][2] == selectedRiverLng) {
+        pinLocationName = locations[i][0];
+        return pinLocationName;
+      }
+    }
+    // console.log(pinLocationName);
+  };
+
+  google.maps.event.addDomListener(window, 'load', initialize);
+  submitButton.addEventListener('click', function () {
   riverRunner();
 });
+
