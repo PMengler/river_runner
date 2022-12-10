@@ -2,8 +2,11 @@ var weatherAPIkey = '6c2804129ff3cbd5d74a5aa5eb917a4c';
 var googleAPIkey = `AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw`;
 var weather = [];
 var locations = [];
+var searchedLocations = JSON.parse(localStorage.getItem("searchedLocations")) || [];;
+var destination;
 let destinationLat;
 let destinationLng;
+var address;
 let selectedRiverLat;
 let selectedRiverLng;
 let distance;
@@ -42,7 +45,6 @@ function createRiverMarker(latlng, html) {
     map: map,
     icon: pinImage
   });
-
   
   google.maps.event.addListener(riverMarker, 'click', function () {
     selectedRiverLat = riverMarker.getPosition().lat();
@@ -57,13 +59,31 @@ function createRiverMarker(latlng, html) {
   return riverMarker;
 }
 
-function riverRunner() {
-  // gets destination input and centers and marks map
-  let cityEl = document.getElementById('city').value;
-  let stateEl = document.getElementById('state').value;
-  let address = `${cityEl}, ${stateEl}`;
+function saveSearch(address) {
+  searchedLocations.push(address);
+  localStorage.setItem('lastSearches', JSON.stringify(searchedLocations))
+}
+
+function displaySearchResults() {
+  let searchResults = localStorage.getItem('lastSearches');
+  if (!searchResults) {
+    // write code to insert "No Search History"
+  }
+
+
+}
+
+function riverRunner(place) {
+  // write function to get local storage and click event overwrites address;
+  if (place == undefined) {
+    let cityEl = document.getElementById('city').value;
+    let stateEl = document.getElementById('state').value;
+    address = `${cityEl}, ${stateEl}`;
+  }
+
+  saveSearch(address);
   
-  geocoder.geocode({ 'address': address }, function (results, status) {
+geocoder.geocode({ 'address': address }, function (results, status) {
     if (status == 'OK') {
       destination = results[0].geometry.location;
       map.setCenter(destination);
@@ -134,4 +154,6 @@ function riverRunner() {
 };
 
 google.maps.event.addDomListener(window, 'load', initialize);
-submitButton.addEventListener('click', riverRunner);
+submitButton.addEventListener('click', function () {
+  riverRunner();
+});
