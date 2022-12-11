@@ -1,18 +1,21 @@
 var weatherAPIkey = '6c2804129ff3cbd5d74a5aa5eb917a4c';
 var weather = [];
 var locations = [];
-var searchedLocations = JSON.parse(localStorage.getItem("searchedLocations")) || [];;
 var destination;
 let destinationLat;
 let destinationLng;
-var address;
+let address;
+let cityEl;
 let selectedRiverLat;
 let selectedRiverLng;
 let distance;
 var pinLocationName = '';
 var submitButton = document.getElementById('fetch-button');
+var searchDropDown = document.getElementById('last-searches-dropdown');
 var geocoder;
 var map;
+let lastSearchEl;
+let container;
 
 function initialize() {
   // initial map pre-destination search
@@ -49,8 +52,8 @@ function createRiverMarker(latlng, html) {
   google.maps.event.addListener(riverMarker, 'click', function () {
     selectedRiverLat = riverMarker.getPosition().lat();
     selectedRiverLng = riverMarker.getPosition().lng();
-    console.log(calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng));
     calcDistance(destinationLat, destinationLng, selectedRiverLat, selectedRiverLng);
+
     let distanceInfo = `<li> Distance: ${distance} miles away</li>`
     let infowindow = new google.maps.InfoWindow();
     infowindow.setContent(html + distanceInfo);
@@ -64,31 +67,79 @@ function createRiverMarker(latlng, html) {
   return riverMarker;
 }
 
-function saveSearch(address) {
-  searchedLocations.push(address);
-  localStorage.setItem('lastSearches', JSON.stringify(searchedLocations))
+function saveSearch(city) {
+  let getLocalStorage = localStorage.getItem('lastSearches');
+  let localStorageArr = [];
+
+  localStorageArr = getLocalStorage.split(',');
+
+  // skips adding to local storage if its a duplicate entry
+  for (var i = 0; i <= localStorageArr.length; i++) { 
+    if (localStorageArr[i] == city) {
+      return;
+    }
+  }
+  localStorageArr.push(city);
+  localStorage.setItem('lastSearches', localStorageArr)
+}
+
+function createContainer() {
+  // creating a container for anchor attributes - this makes it easier to reset and clean up added anchors
+  lastSearchEl = document.getElementById('search-history');
+  container = document.createElement('div');
+  lastSearchEl.appendChild(container);
+}
+
+function createAnchor(text) {
+  let displaySearchEl = document.createElement('a');
+    displaySearchEl.classList.add('navbar-item')
+    displaySearchEl.textContent = text;
+    container.appendChild(displaySearchEl);
 }
 
 function displaySearchResults() {
-  let searchResults = localStorage.getItem('lastSearches');
-  if (!searchResults) {
-    // write code to insert "No Search History"
+  // get local storage and format into array
+  let getLocalStorage = localStorage.getItem('lastSearches');
+  let localStorageArr = [];
+  
+  if (getLocalStorage) {
+    localStorageArr = getLocalStorage.split(',');
   }
 
+  // clearing previously added anchor elements
+  if (lastSearchEl) {
+    let children = lastSearchEl.getElementsByTagName('a');
+    console.log(children.length)
+    if (children) {
+      container.remove();
+    }
+  }
 
+  createContainer();
+
+  if (localStorageArr.length === 0) {
+    let text = 'No Search History Available'
+    createAnchor(text);
+  }
+ 
+  for (var i = 0; i < localStorageArr.length; i++) {
+    createAnchor(localStorageArr[i])
+  }
+
+  // searchDropDown.addEventListener('click', displaySearchResults)
 }
 
 function riverRunner(place) {
   // write function to get local storage and click event overwrites address;
   if (place == undefined) {
-    let cityEl = document.getElementById('city').value;
+    cityEl = document.getElementById('city').value;
     let stateEl = document.getElementById('state').value;
     address = `${cityEl}, ${stateEl}`;
   }
 
-  saveSearch(address);
+  saveSearch(cityEl);
   
-geocoder.geocode({ 'address': address }, function (results, status) {
+  geocoder.geocode({ 'address': address }, function (results, status) {
     if (status == 'OK') {
       destination = results[0].geometry.location;
       map.setCenter(destination);
@@ -138,81 +189,85 @@ geocoder.geocode({ 'address': address }, function (results, status) {
         createRiverMarker(new google.maps.LatLng(locations[i][1], locations[i][2]), contentString)
       }
     })
-    return;
-  };
+  // displaySearchResults();
+  return;
+};
   
-  function getWeather() {
-    var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${selectedRiverLat}&lon=${selectedRiverLng}&units=imperial&appid=${weatherAPIkey}`;
-    fetch(requestUrl)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        // console.log(data);
-        weather.push([
-          data.current.temp, 
-          data.current.wind_speed,
-          data.current.uvi,
-          data.current.weather[0].icon]);
-          
-        var currentWeatherEl = $('.message-body');
+function getWeather() {
+  var requestUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${selectedRiverLat}&lon=${selectedRiverLng}&units=imperial&appid=${weatherAPIkey}`;
+  fetch(requestUrl)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      // console.log(data);
+      weather.push([
+        data.current.temp, 
+        data.current.wind_speed,
+        data.current.uvi,
+        data.current.weather[0].icon]);
+        
+      var currentWeatherEl = $('.message-body');
 
-        currentWeatherEl.addClass('container'); //card text-white bg-dark mb-3
-  
-        // selected location in current weather card
-        var locationNameEl = $('<h3>');
-        locationNameEl.text(pinLocationName);
-        currentWeatherEl.append(locationNameEl);
+      currentWeatherEl.addClass('container'); //card text-white bg-dark mb-3
 
-        // weather emoji for weather in current weather card
-        var currentWeatherEmoji =  weather[0][3];
-        var currentWeatherEmojiEl = $('<img>');
-        currentWeatherEmojiEl.attr('src', "http://openweathermap.org/img/wn/" + currentWeatherEmoji + ".png");
-        currentWeatherEl.append(currentWeatherEmojiEl);
-        
-        // temperature
-        var currentTemp = weather[0][0];
-        var currentTempEl = $('<li>');
-        currentTempEl.text(`Temp: ${currentTemp} °F`)
-        currentWeatherEl.append(currentTempEl);
-        
-        // get current wind speed and display
-        var currentWind = weather[0][1];
-        var currentWindEl = $('<li>')
-        currentWindEl.text(`Wind: ${currentWind} mph`)
-        currentWeatherEl.append(currentWindEl);
-        
-        // UV
-        var currentUv = weather[0][2];
-        var currentUvEl = $('<li>');
-        currentUvEl.text(`UV Index: ${currentUv}`)
-        currentWeatherEl.append(currentUvEl);
-        
-      });
+      // selected location in current weather card
+      var locationNameEl = $('<h3>');
+      locationNameEl.text(pinLocationName);
+      currentWeatherEl.append(locationNameEl);
+
+      // weather emoji for weather in current weather card
+      var currentWeatherEmoji =  weather[0][3];
+      var currentWeatherEmojiEl = $('<img>');
+      currentWeatherEmojiEl.attr('src', "http://openweathermap.org/img/wn/" + currentWeatherEmoji + ".png");
+      currentWeatherEl.append(currentWeatherEmojiEl);
       
-      console.log(weather);
-      return;
-  };
-
-  // Creating a card with weather info
-  function clearCurrentWeather () {
-    var currentWeatherEl = $(".message-body");
-    currentWeatherEl.empty();
+      // temperature
+      var currentTemp = weather[0][0];
+      var currentTempEl = $('<li>');
+      currentTempEl.text(`Temp: ${currentTemp} °F`)
+      currentWeatherEl.append(currentTempEl);
+      
+      // get current wind speed and display
+      var currentWind = weather[0][1];
+      var currentWindEl = $('<li>')
+      currentWindEl.text(`Wind: ${currentWind} mph`)
+      currentWeatherEl.append(currentWindEl);
+      
+      // UV
+      var currentUv = weather[0][2];
+      var currentUvEl = $('<li>');
+      currentUvEl.text(`UV Index: ${currentUv}`)
+      currentWeatherEl.append(currentUvEl);
+      
+    });
+    
+    console.log(weather);
     return;
-  };
+};
 
-  function getPinLocationName () {
-    for (var i = 0; i < locations.length; i++) {
-      if (locations[i][1] == selectedRiverLat && locations[i][2] == selectedRiverLng) {
-        pinLocationName = locations[i][0];
-        return pinLocationName;
-      }
+// Creating a card with weather info
+function clearCurrentWeather () {
+  var currentWeatherEl = $(".message-body");
+  currentWeatherEl.empty();
+  return;
+};
+
+function getPinLocationName () {
+  for (var i = 0; i < locations.length; i++) {
+    if (locations[i][1] == selectedRiverLat && locations[i][2] == selectedRiverLng) {
+      pinLocationName = locations[i][0];
+      return pinLocationName;
     }
-    // console.log(pinLocationName);
-  };
+  }
+  // console.log(pinLocationName);
+};
 
-  google.maps.event.addDomListener(window, 'load', initialize);
-  submitButton.addEventListener('click', function () {
+// displaySearchResults();
+google.maps.event.addDomListener(window, 'load', initialize);
+submitButton.addEventListener('click', function () {
   riverRunner();
+  displaySearchResults();
 });
+searchDropDown.addEventListener('click', displaySearchResults)
 

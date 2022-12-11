@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Raleway">
     <script type="text/javascript"
-    src="https://maps.googleapis.com/maps/api/js?sensor=false&v=3&libraries=geometry,places&key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly"></script>
+    src="https://maps.googleapis.com/maps/api/js?v=3&libraries=geometry,places&key=AIzaSyDZMxrOcwvMPEtvRL8YuYM4DJAH6kNw2Fw&callback=initMap&v=weekly"></script>
 </head>
 
 <body class="body">
@@ -28,13 +28,20 @@
         </div>
         <!-- Navbar dropdown -->
         <div class="navbar-item has-dropdown is-hoverable navbar-end">
-            <a class="navbar-link has-text-grey-dark">
+            <a id="last-searches-dropdown" class="navbar-link has-text-grey-dark">
               Last Searches
             </a>
-            <div class="navbar-dropdown">
-              <!-- <a class="navbar-item">
-                Search Item
-              </a> -->
+            <div id="search-history" class="navbar-dropdown">
+              <!-- <div>
+                <a class="navbar-item">
+                  Search Item
+                </a>
+                <a class="navbar-item">
+                  Search Item
+                </a>
+
+              </div> -->
+              
             </div>
           </div>
         </div>
