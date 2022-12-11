@@ -6,6 +6,7 @@ let destinationLat;
 let destinationLng;
 let address;
 let cityEl;
+let stateEl;
 let selectedRiverLat;
 let selectedRiverLng;
 let distance;
@@ -71,7 +72,9 @@ function saveSearch(city) {
   let getLocalStorage = localStorage.getItem('lastSearches');
   let localStorageArr = [];
 
-  localStorageArr = getLocalStorage.split(',');
+  if (getLocalStorage) {
+    localStorageArr = getLocalStorage.split(',');
+  }
 
   // skips adding to local storage if its a duplicate entry
   for (var i = 0; i <= localStorageArr.length; i++) { 
@@ -92,9 +95,10 @@ function createContainer() {
 
 function createAnchor(text) {
   let displaySearchEl = document.createElement('a');
-    displaySearchEl.classList.add('navbar-item')
-    displaySearchEl.textContent = text;
-    container.appendChild(displaySearchEl);
+  displaySearchEl.classList.add('search-result')
+  displaySearchEl.classList.add('navbar-item')
+  displaySearchEl.textContent = text;
+  container.appendChild(displaySearchEl);
 }
 
 function displaySearchResults() {
@@ -126,16 +130,26 @@ function displaySearchResults() {
     createAnchor(localStorageArr[i])
   }
 
-  // searchDropDown.addEventListener('click', displaySearchResults)
+  $(document).on("click", ".search-result", function () {
+    // overwrite displayed text in city
+    let cityText = document.getElementById('city');
+    cityText.textContent = this.textContent;
+
+    riverRunner(this.textContent)
+  });
 }
 
 function riverRunner(place) {
-  // write function to get local storage and click event overwrites address;
+  let resetMarket = false;
+
   if (place == undefined) {
     cityEl = document.getElementById('city').value;
-    let stateEl = document.getElementById('state').value;
-    address = `${cityEl}, ${stateEl}`;
+  } else {
+    cityEl = place;
+    resetMarket = true;
   }
+  stateEl = document.getElementById('state').value;
+  address = `${cityEl}, ${stateEl}`;
 
   saveSearch(cityEl);
   
@@ -147,6 +161,9 @@ function riverRunner(place) {
           map: map,
           position: destination
       });
+      // if (resetMarket) {
+      //   marker.setMap(null);
+      // }
       destinationLat = marker.getPosition().lat();
       destinationLng = marker.getPosition().lng();
     } else {
@@ -189,7 +206,6 @@ function riverRunner(place) {
         createRiverMarker(new google.maps.LatLng(locations[i][1], locations[i][2]), contentString)
       }
     })
-  // displaySearchResults();
   return;
 };
   
@@ -263,7 +279,6 @@ function getPinLocationName () {
   // console.log(pinLocationName);
 };
 
-// displaySearchResults();
 google.maps.event.addDomListener(window, 'load', initialize);
 submitButton.addEventListener('click', function () {
   riverRunner();
