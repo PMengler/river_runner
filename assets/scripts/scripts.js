@@ -1,6 +1,7 @@
 var weatherAPIkey = '6c2804129ff3cbd5d74a5aa5eb917a4c';
 var weather = [];
 var locations = [];
+var marker;
 var destination;
 let destinationLat;
 let destinationLng;
@@ -143,6 +144,9 @@ function riverRunner(place) {
     cityEl = document.getElementById('city').value;
   } else {
     cityEl = place;
+    if (marker && marker.setMap) {
+    marker.setMap(null);
+    }
   }
   stateEl = document.getElementById('state').value;
   address = `${cityEl}, ${stateEl}`;
@@ -153,7 +157,7 @@ function riverRunner(place) {
     if (status == 'OK') {
       destination = results[0].geometry.location;
       map.setCenter(destination);
-      var marker = new google.maps.Marker({
+      marker = new google.maps.Marker({
           map: map,
           position: destination
       });
