@@ -1,0 +1,23 @@
+# Group 1 - River Runner Project
+
+As a group of developers, we want to creaet an website that helps users find real-time water conditions and weather data from the United States Geological Survey and Openweather.org.  
+
+## Accepted Criteria
+
+It's done when both API's are fully functioning.
+
+It's done when users are be able to input their location and successfully access data from locations all over Oregon.
+
+It's done when users can select a river in order to see its current weather conditions.
+
+It's done when users can view their past searches.
+
+## Assets
+
+The following image demonstrates the web application's appearance and functionality:
+
+![ Webpage titled 'River Runner' with a spot a user input for map data, past searches slot, and river weather condition display ] ('assets/images/rrwebsite.png')
+
+Link to the deployed application: ( http://127.0.0.1:5500/index.html )
+
+Link to GitHub Repo: ( https://github.com/savannahvel/river_runner )
