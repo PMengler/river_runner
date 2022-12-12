@@ -140,13 +140,15 @@ function displaySearchResults() {
 }
 
 function riverRunner(place) {
+  // clears previous marker so there's only one red marker at a time
+  if (marker && marker.setMap) {
+    marker.setMap(null);
+  }
+
   if (place == undefined) {
     cityEl = document.getElementById('city').value;
   } else {
     cityEl = place;
-    if (marker && marker.setMap) {
-    marker.setMap(null);
-    }
   }
   stateEl = document.getElementById('state').value;
   address = `${cityEl}, ${stateEl}`;
