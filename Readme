@@ -2,6 +2,8 @@
 
 As a group of developers, we want to create an website that helps users find real-time water conditions and weather data from the United States Geological Survey and Openweather.org.  
 
+This is to help them plan out their water related activities (ex. rafting) in Oregon.
+
 ## Accepted Criteria
 
 It's done when both API's are fully functioning.
