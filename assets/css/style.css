@@ -11,7 +11,7 @@
   }
 
   .body {
-  background-image: url('/assets/images/rogue-river-oregon.jpg');
+  background-image: url('../images/rogue-river-oregon.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;  
   background-size: cover;
