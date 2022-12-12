@@ -113,7 +113,6 @@ function displaySearchResults() {
   // clearing previously added anchor elements
   if (lastSearchEl) {
     let children = lastSearchEl.getElementsByTagName('a');
-    console.log(children.length)
     if (children) {
       container.remove();
     }
@@ -133,20 +132,17 @@ function displaySearchResults() {
   $(document).on("click", ".search-result", function () {
     // overwrite displayed text in city
     let cityText = document.getElementById('city');
-    cityText.textContent = this.textContent;
+    cityText.value = this.textContent
 
     riverRunner(this.textContent)
   });
 }
 
 function riverRunner(place) {
-  let resetMarket = false;
-
   if (place == undefined) {
     cityEl = document.getElementById('city').value;
   } else {
     cityEl = place;
-    resetMarket = true;
   }
   stateEl = document.getElementById('state').value;
   address = `${cityEl}, ${stateEl}`;
@@ -161,9 +157,6 @@ function riverRunner(place) {
           map: map,
           position: destination
       });
-      // if (resetMarket) {
-      //   marker.setMap(null);
-      // }
       destinationLat = marker.getPosition().lat();
       destinationLng = marker.getPosition().lng();
     } else {
