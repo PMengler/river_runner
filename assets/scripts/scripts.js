@@ -194,9 +194,6 @@ function riverRunner(place) {
       
       for (let i = 0; i < locations.length; i++) {  
         var contentString = `<h3> ${locations[i][0]} </h3 contentString = 3>` +
-                            // `<p> Weather: </p>` +
-                            // `<li> Temperature: ${weather[i][0]} F` +
-                            // `<li> Wind Speed: ${weather[i][1]} mph` +
                             `<p> Water Conditions: </p>` +
                             `<li> Stage: ${locations[i][3]} ft` +
                             `<li> Flowrate: ${locations[i][4]} cfs` +
