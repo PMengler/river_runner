@@ -18,8 +18,8 @@ It's done when users can view their past searches.
 
 The following image demonstrates the web application's appearance and functionality:
 
-![ Webpage titled 'River Runner' with a spot a user input for map data, past searches slot, and river weather condition display ] ('assets/images/rrwebsite.png')
+![ Webpage titled 'River Runner' with a spot a user input for map data, past searches slot, and river weather condition display ](./assets/images/rrwebsite.png))
 
-Link to the deployed application: ( http://127.0.0.1:5500/index.html )
+[Link to the deployed application](https://savannahvel.github.io/river_runner)
 
-Link to page ( https://savannahvel.github.io/river_runner/ )
+[Link to page](https://savannahvel.github.io/river_runner/)
