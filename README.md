@@ -6,6 +6,7 @@ This app was created to aid the user in finding a location in the state of Orego
 ## Technologies
 The technologies used to accomplish this included the use of USGS WaterServices API, Google Maps API, OpenWeather API, Bulma CSS library, JavaScript and more. 
 
+## User Story
 As a group of developers, we want to create an website that helps users find real-time water conditions and weather data from the United States Geological Survey and Openweather.org.  
 
 This is to help them plan out their water related activities (ex. rafting) in Oregon.
